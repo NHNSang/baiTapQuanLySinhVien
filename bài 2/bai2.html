@@ -15,7 +15,7 @@
             <div class="col-6 mx-auto">
                 <h3 class="display-4 text-center">Quản Lý sinh viên</h3>
                 <!-- // gọi tới sự kiện onsubmit trên form và gắn hàm xử lí vào  -->
-                <form  id="formQLSV">
+                <form onsubmit="getValueUser()" id="formQLSV">
                     <div class="row">
                         <div class="col-6 form-group">
                             <label for="">Mã Sinh Viên : </label>
@@ -75,7 +75,7 @@
                     </div>
 
                     <div class="form-group text-center">
-                        <button type="button" onclick="" class="btn btn-success">Thêm Sinh Viên</button>
+                        <button type="submit" onclick="" class="btn btn-success">Thêm Sinh Viên</button>
 
                         <button type="button" onclick="" class="btn btn-dark">Reset</button>
                         <button type="button" onclick="" class="btn btn-info">Cập Nhật</button>
@@ -109,6 +109,8 @@
                     </tbody>
                 </table>
             </div>
+
+
 
 
         </div>

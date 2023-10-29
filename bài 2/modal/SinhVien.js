@@ -1,5 +1,4 @@
-// --------B2: Tạo lớp đối tượng đẻ lưu trữ dữ liệu----------
-// Lưu ý tạo biến trùng với id
+// tạo lớp đối tượng sinh viên
 function SinhVien (){
     this.txtMaSV = '';
     this.txtTenSV = '';
@@ -10,12 +9,9 @@ function SinhVien (){
     this.txtDiemToan = '';
     this.txtDiemLy = '';
     this.txtDiemHoa = '';
-    
-    // Tính điểm TB
-    this.tinhDiemTrungBinh = function (){
-        diemTb = (this.txtDiemHoa * 1 + this.txtDiemLy * 1 + this.txtDiemToan * 1 ) / 3
-        return diemTb;
-        
+
+    this.tinhDiemTrungBinh = function(){
+        diemTrungBinh = (this.txtDiemHoa * 1 + this.txtDiemLy *1 + this.txtDiemToan*1) / 3;
+        return diemTrungBinh;
     }
 }
-

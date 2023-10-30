@@ -40,3 +40,18 @@ function checkMinMaxVulua (value,idSpan,min,max){
         return false
     }
 }
+// -------Kiểm tra khóa học------
+function checkMinMaxDiem (value,idSpan,min,max){
+    // kiểm tra độ dài kí tự
+    if(value.length >=  min && value.length <= max){
+        // Điều kiện đúng dữ liệu yêu cầu
+        document.getElementById(idSpan).innerHTML = '';
+        return true
+    }
+    else{
+        // Điều kiên dữ liệU sai
+        document.getElementById(idSpan).innerHTML = `Vui lòng nhập từ ${min} cho đến ${max}`;
+        return false
+    }
+}
+   

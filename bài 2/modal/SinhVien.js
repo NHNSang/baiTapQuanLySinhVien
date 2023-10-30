@@ -1,4 +1,4 @@
-// tạo lớp đối tượng sinh viên
+// Tạo lớp đối tượng
 function SinhVien (){
     this.txtMaSV = '';
     this.txtTenSV = '';
@@ -10,8 +10,9 @@ function SinhVien (){
     this.txtDiemLy = '';
     this.txtDiemHoa = '';
 
-    this.tinhDiemTrungBinh = function(){
-        diemTrungBinh = (this.txtDiemHoa * 1 + this.txtDiemLy *1 + this.txtDiemToan*1) / 3;
-        return diemTrungBinh;
+    // Hàm tính điểm trung bình 
+    this.diemTrungBinhCong =  function(){
+        var congThuctinhDiemTb = (this.txtDiemHoa * 1 + this.txtDiemLy * 1 + this.txtDiemToan * 1) / 3
+        return congThuctinhDiemTb
     }
 }

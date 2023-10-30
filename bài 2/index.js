@@ -69,8 +69,11 @@ function getValueUser(){
         else if(arrIdInput[i] == "txtPass"){
             isValid &= checkEmptyValue(valueIdInput,arrIdSpan[i]) && checkMinMaxVulua(valueIdInput,arrIdSpan[i],6,10);
         }
+        if (arrIdInput[i] === "txtDiemToan" || arrIdInput[i] === "txtDiemLy" || arrIdInput[i] === "txtDiemHoa") {
+            isValid &= checkEmptyValue(valueIdInput, arrIdSpan[i]) && checkMinMaxDiem(valueIdInput, arrIdSpan[i], 1, 10);
+          }
         else{
-            isValid = checkEmptyValue(valueIdInput,arrIdSpan[i])
+            isValid &= checkEmptyValue(valueIdInput,arrIdSpan[i])
         }
     }
     console.log(sinhVien)
@@ -106,7 +109,7 @@ function randerDisplay(arr){
             <td>${sinhVien.txtEmail}</td>
             <td>${sinhVien.txtNgaySinh}</td>
             <td>${sinhVien.khSV}</td>
-            <td>${sinhVien.tinhDiemTrungBinh()}</td>
+            <td>${sinhVien.diemTrungBinhCong()}</td>
             <td>
             <button onclick="deleteUser('${sinhVien.txtMaSV}')"  class="btn btn-danger">Delete</button>
             <button onclick="getInforUser('${sinhVien.txtMaSV}')" class="btn btn-dark">Edit</button>

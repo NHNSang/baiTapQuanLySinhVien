@@ -12,6 +12,20 @@ var arrIdInput = [
 ];
 console.log(arrIdInput)
 
+// Tạo mãng lấy các id Span 
+var arrIdSpan = [
+    'spanMaSV',
+    'spanTenSV',
+    'spanEmailSV',
+    'spanMatKhau',
+    'spanNgaySinh',
+    'spanKhoaHoc',
+    'spanToan',
+    'spanLy',
+    'spanHoa',
+]
+
+
 // Tạo mãng để lưu trữ các dữ liệu
 var arrSinhVien = [];
 
@@ -25,15 +39,42 @@ function getValueUser(){
     var sinhVien = new SinhVien();
     console.log(sinhVien)
 
+    // Tạo biến để kiểm tra Validation
+    var isValid = true;
+
     // Chạy vòng lặp để gọi tới các thẻ của id input
     for(var i = 0 ; i < arrIdInput.length ; i++){
         var valueIdInput = document.getElementById(arrIdInput[i]).value;
 
         // Lưu trữ dữ liệu
         sinhVien[arrIdInput[i]] = valueIdInput;
+
+        // ------Validation-----
+        // Kiểm tra dữ liệu đầu vào từ người dùng nếu ko nhập sẽ hiện thông báo
+        // isValid = isValid && checkEmptyValue(valueIdInput,arrIdSpan[i])
+
+        // Kiểm tra dữ liệu email
+        // if(arrIdInput[i] == 'txtEmail'){
+        //     checkEmailValue(valueIdInput,arrIdSpan[i])
+        // }
+
+        // Kiểm tra dữ liệu mật khâu
+        // if(arrIdInput[i]="txtPass"){
+        //     isValid = checkMinMaxVulua(valueIdInput,arrIdSpan[i],6,10)
+        // }
+
+        if(arrIdInput[i] == "txtEmail"){
+            isValid &= checkEmptyValue(valueIdInput,arrIdSpan[i]) && checkEmailValue(valueIdInput,arrIdSpan[i]);
+        }
+        else if(arrIdInput[i] == "txtPass"){
+            isValid &= checkEmptyValue(valueIdInput,arrIdSpan[i]) && checkMinMaxVulua(valueIdInput,arrIdSpan[i],6,10);
+        }
+        else{
+            isValid = checkEmptyValue(valueIdInput,arrIdSpan[i])
+        }
     }
     console.log(sinhVien)
-
+    if(isValid){
     // Đẩy dữ liệu bằng push
     arrSinhVien.push(sinhVien);
     // Lưu vào localstorage
@@ -42,6 +83,7 @@ function getValueUser(){
 
     // gọi tới id để clear
     document.getElementById("formQLSV").reset();
+    }
 }
 
 // -----Rander dữ liệu lên giao diện ---------
@@ -54,11 +96,9 @@ function randerDisplay(arr){
     // Tạo biến để rander
     var content = '';
     for(var z = 0; z < arr.length; z++){
-        // tạo lớp đối tượng để lấy từ local
         var sinhVien = new SinhVien();
         var valueSinhVien = arr[z];
-        // Coppy để ra phương thức
-        Object.assign(sinhVien,valueSinhVien);
+        Object.assign(sinhVien,valueSinhVien),
         content += `
         <tr>
             <td>${sinhVien.txtMaSV}</td>
@@ -69,7 +109,7 @@ function randerDisplay(arr){
             <td>${sinhVien.tinhDiemTrungBinh()}</td>
             <td>
             <button onclick="deleteUser('${sinhVien.txtMaSV}')"  class="btn btn-danger">Delete</button>
-            <button class="btn btn-dark">Repair</button>
+            <button onclick="getInforUser('${sinhVien.txtMaSV}')" class="btn btn-dark">Edit</button>
             </td>
         </tr>
         `
@@ -89,34 +129,44 @@ function deleteUser(maSV){
     if(index != -1){
         arrSinhVien.splice(index,1);
         saveLocalStore("arrSinhVien",arrSinhVien);
-
         randerDisplay()
     }
 }
-// ----------------------------------
-// Lưu trử locolStorage saveLocalStore
 
-// ép kiểu JSON.stringify
-// lưu xún local localStorage.setItem("...";...)
-// truy suất local localStorage.getItem("...";...)
-// Chuyển dữ liệu JSON.parse
+// ---Lấy dữ liệu cũ nếu sai thì cho người dùng sửa (Chức năng edit)----
+function getInforUser(maSV){
+    var sinhVien ={};
+    for(var i = 0; i < arrSinhVien.length ; i++){
+        if(arrSinhVien[i].txtMaSV == maSV){
+            sinhVien = arrSinhVien[i];
+        }
+        
+    }
+    console.log(sinhVien)
+    for(var z = 0; z < arrIdInput.length ; z++){
+        document.getElementById(arrIdInput[z]).value = sinhVien[arrIdInput[z]];
+    }
 
-// Xoá localStorage.removeItem
-
-// -----Chức năng lưu trữ xún localStorage-------
-function saveLocalStore(key,value){
-    // Chuyển dữ liệu object, array về chuỗi JSON
-    var valueString = JSON.stringify(value);
-    localStorage.setItem(key,valueString)
 }
 
-// -----Chức năng lấy dữ liệu localStorage-------
+
+
+
+
+
+
+// ---------Tạo localStorage------------------
+// B1: Lưu dữ liệu
+function saveLocalStore(key,value){
+    var valueString = JSON.stringify(value);
+    localStorage.setItem(key,valueString);
+}
+// B2: Đưa dữ liệu lên giao diện
 function getLocalStore(key){
     var arrLocal = JSON.parse(localStorage.getItem(key));
-    // Lưu ý có 2 trường hợp: 1)Có dữ liệ 2)Dữ liệu null
     if(arrLocal){
         arrSinhVien = arrLocal;
         randerDisplay()
     }
 }
-getLocalStore('arrSinhVien')
+getLocalStore('arrSinhVien');
